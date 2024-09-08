@@ -1,4 +1,4 @@
-**FastAPI Pre-requested:**
+**Python Topics:**
 
 To work with **FastAPI**, it’s essential to have a solid understanding of several **Python concepts**. Below are the important Python topics that are prerequisites for working with FastAPI:
 
