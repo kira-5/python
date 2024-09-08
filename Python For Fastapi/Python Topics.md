@@ -176,6 +176,59 @@ def read_items(db=Depends(get_db)):
     return {"db": db}
 ```
 
+
+### 9. **Middleware**
+
+### **Middleware in FastAPI**
+
+Middleware in FastAPI allows you to process requests and responses before they reach your route handlers or after the response has been returned. Middleware is useful for tasks such as logging, authentication, and modifying requests or responses.
+
+**Key Points:**
+
+1. **Defining Middleware:**
+    
+    * Middleware in FastAPI is defined as a callable function or class that takes a `request` and `call_next` parameter.
+    * `call_next` is a function that calls the next middleware or route handler in the chain and returns a response.
+2. **Using Middleware:**
+    
+    * Middleware is added to the FastAPI application using the `add_middleware` method.
+    * It is added globally to the application and will be executed for every request.
+
+**Example:**
+
+Here's an example of defining and using middleware in FastAPI:
+
+```python
+from fastapi import FastAPI, Request
+from starlette.middleware.base import BaseHTTPMiddleware
+
+app = FastAPI()
+
+# Define custom middleware
+class CustomMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # Logic to execute before passing request to route handler
+        response = await call_next(request)
+        # Logic to execute after receiving response from route handler
+        response.headers["X-Custom-Header"] = "Value"
+        return response
+
+# Add middleware to the application
+app.add_middleware(CustomMiddleware)
+
+@app.get("/items/")
+async def read_items():
+    return {"message": "Hello World"}
+```
+
+**Notes:**
+
+* **Middleware Order:** Middleware is executed in the order it is added to the application. Ensure to add middleware in the correct sequence based on the functionality.
+* **Middleware Scope:** Middleware affects all routes in the application. If you need to apply middleware to specific routes, consider using route-specific dependencies or alternative approaches.
+* **Exception Handling:** Middleware can be used to handle exceptions globally, log errors, or modify error responses.
+
+Understanding and implementing middleware in FastAPI allows you to manage cross-cutting concerns effectively and maintain cleaner and more modular code.
+
 ### 10. **Context Managers and `with` Statements**
 
 Context managers are used for resource management (e.g., opening files or managing database connections). You should be familiar with:
