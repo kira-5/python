@@ -1,0 +1,9 @@
+flake8
+autopep8
+pylint
+python-dotenv   #for loading environment variables
+pip-tools
+
+fastapi
+uvicorn # ASGI server
+pydantic[email] # Email Validator
